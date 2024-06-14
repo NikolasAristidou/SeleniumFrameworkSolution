@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using SeleniumFramework.Core.Pages;
 using SeleniumFramework.Core.Base;
+using NUnit.Framework;
+
 
 namespace SeleniumFramework.Tests.TestClasses
 {
@@ -15,14 +17,14 @@ namespace SeleniumFramework.Tests.TestClasses
         {
             _driver = WebDriverFactory.GetWebDriver();
             _homePage = new HomePage(_driver);
-            _homePage.Open();
+            _homePage.GoToUrl();
         }
 
         [Test]
         public void HomePageLoadTest()
         {
-            // Assert that the home page is loaded successfullya
-            Assert.That(_homePage.IsAt(), Is.True, "Amazon home page did not load successfully.");
+            bool isLogoDisplayed = _homePage.ValidateLogo("id", "nav-logo-sprites");
+            Assert.That(isLogoDisplayed, "The Amazon logo is not displayed on the home page.");
         }
 
 
