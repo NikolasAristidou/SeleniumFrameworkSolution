@@ -1,7 +1,8 @@
 ﻿using OpenQA.Selenium;
 using SeleniumFramework.Core.Pages;
 using SeleniumFramework.Core.Base;
-using NUnit.Framework;
+using SeleniumFramework.Core.Utilities;
+using SeleniumFramework.Core.Enums;
 
 
 namespace SeleniumFramework.Tests.TestClasses
@@ -12,23 +13,29 @@ namespace SeleniumFramework.Tests.TestClasses
         private IWebDriver _driver;
         private HomePage _homePage;
 
-        [SetUp]
-        public void Setup()
+        [OneTimeSetUp]
+        public void OneTimeSetup()
         {
             _driver = WebDriverFactory.GetWebDriver();
             _homePage = new HomePage(_driver);
             _homePage.GoToUrl();
         }
 
-        [Test]
+        [Test, Description("Verifies amazon home page loaded by validating persisting logo on the left side")]
         public void HomePageLoadTest()
         {
-            bool isLogoDisplayed = _homePage.ValidateLogo("id", "nav-logo-sprites");
-            Assert.That(isLogoDisplayed, "The Amazon logo is not displayed on the home page.");
+            bool isLogoDisplayed = _homePage.ValidateElementVisibility(LocatorType.Id, "nav-logo-sprites");
+            Assert.That(isLogoDisplayed, "The Amazon logo is displayed on the home page - page loaded");
+            Logger.Log("Home Page loaded");
         }
 
+        [Test, Description("Verifies Navigation has loaded sucessfully")]
+        public void VerifyNavigationLinkIsDisplayed()
+        {
+            Assert.That(_homePage.ValidateElementVisibility(LocatorType.Id, "nav-xshop"));
+        }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void Teardown()
         {
             _driver.Quit();
