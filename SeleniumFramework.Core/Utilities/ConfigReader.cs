@@ -10,7 +10,7 @@ namespace SeleniumFramework.Core.Utilities
 
         static ConfigReader()
         {
-            var coreProjectDirectory = AppDomain.CurrentDomain.BaseDirectory; // This assumes settings.json is in the output directory
+            var coreProjectDirectory = @"C:\Users\nikol\source\repos\SeleniumFrameworkSolution";
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(coreProjectDirectory)
