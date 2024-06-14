@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
+using SeleniumFramework.Core.Enums;
 using SeleniumFramework.Core.Pages;
 using SeleniumFramework.Core.Utilities;
 
@@ -13,8 +15,9 @@ namespace SeleniumFramework.Core.Base
             Driver = driver;
         }
 
-        public void ClickElement(By locator)
+        public void ClickElement(LocatorType locatorType, string elementValue)
         {
+            By locator = GetByLocator(locatorType, elementValue);
             Driver.FindElement(locator).Click();
         }
 
@@ -27,6 +30,13 @@ namespace SeleniumFramework.Core.Base
         {
             Driver.FindElement(locator).Clear();
         }
+        public void HoverToElement(LocatorType locatorType, string elementValue)
+        {
+            By locator = GetByLocator(locatorType, elementValue);
+            IWebElement element = Driver.FindElement(locator);
+            Actions action = new Actions(Driver);
+            action.MoveToElement(element).Perform();
+        }
 
         public abstract string Url { get; }
 
@@ -34,41 +44,14 @@ namespace SeleniumFramework.Core.Base
         {
             Driver.Navigate().GoToUrl(ConfigReader.GetAppSetting("BaseUrl") + Url);
         }
-        public bool ValidateLogo(string elementType, string elementName)
+        public bool ValidateElementVisibility(LocatorType locatorType, string elementName)
         {
+            IWebElement element;
+
             try
             {
-                IWebElement element = null;
-
-                switch (elementType.ToLower())
-                {
-                    case "id":
-                        element = Driver.FindElement(By.Id(elementName));
-                        break;
-                    case "class":
-                        element = Driver.FindElement(By.ClassName(elementName));
-                        break;
-                    case "name":
-                        element = Driver.FindElement(By.Name(elementName));
-                        break;
-                    case "css":
-                        element = Driver.FindElement(By.CssSelector(elementName));
-                        break;
-                    case "xpath":
-                        element = Driver.FindElement(By.XPath(elementName));
-                        break;
-                    case "tag":
-                        element = Driver.FindElement(By.TagName(elementName));
-                        break;
-                    case "link":
-                        element = Driver.FindElement(By.LinkText(elementName));
-                        break;
-                    case "partiallink":
-                        element = Driver.FindElement(By.PartialLinkText(elementName));
-                        break;
-                    default:
-                        throw new ArgumentException($"Unknown element type: {elementType}");
-                }
+                By locator = GetByLocator(locatorType, elementName);
+                element = Driver.FindElement(locator);
 
                 return element.Displayed;
             }
@@ -76,6 +59,26 @@ namespace SeleniumFramework.Core.Base
             {
                 return false;
             }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException($"Unknown locator type: {locatorType}", ex);
+            }
+        }
+
+        private By GetByLocator(LocatorType locatorType, string elementName)
+        {
+            return locatorType switch
+            {
+                LocatorType.Id => By.Id(elementName),
+                LocatorType.Class => By.ClassName(elementName),
+                LocatorType.Name => By.Name(elementName),
+                LocatorType.Css => By.CssSelector(elementName),
+                LocatorType.XPath => By.XPath(elementName),
+                LocatorType.Tag => By.TagName(elementName),
+                LocatorType.LinkText => By.LinkText(elementName),
+                LocatorType.PartialLinkText => By.PartialLinkText(elementName),
+                _ => throw new ArgumentException($"Unknown locator type: {locatorType}")
+            };
         }
     }
 }

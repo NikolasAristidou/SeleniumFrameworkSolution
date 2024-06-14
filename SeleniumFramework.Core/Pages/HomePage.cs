@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using SeleniumFramework.Core.Base;
+using SeleniumFramework.Core.Enums;
 
 namespace SeleniumFramework.Core.Pages
 {
@@ -11,5 +12,10 @@ namespace SeleniumFramework.Core.Pages
 
         public override string Url => "";
 
+        public void NavigateToLoginPage()
+        {
+            HoverToElement(LocatorType.Id, "nav-link-accountList");
+            ClickElement(LocatorType.XPath, "//*[@id=\"nav-flyout-ya-signin\"]/a/span");
+        }
     }
 }
