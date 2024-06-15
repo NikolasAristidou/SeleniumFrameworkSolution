@@ -38,7 +38,12 @@ namespace SeleniumFramework.Core.Base
             Actions action = new Actions(Driver);
             action.MoveToElement(element).Perform();
         }
-
+        public string GetElementText(LocatorType locatorType, string elementName)
+        {
+            By locator = GetByLocator(locatorType, elementName);
+            IWebElement element = Driver.FindElement(locator);
+            return element.Text;
+        }
         public abstract string Url { get; }
 
         public virtual void GoToUrl()
