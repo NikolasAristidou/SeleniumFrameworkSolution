@@ -19,23 +19,18 @@ namespace SeleniumFramework.Core.Pages
             EnterUsername("Username");
             ClickElement(LocatorType.XPath, "//*[@id=\"continue\"]");
             ClickElement(LocatorType.Id, "ap_password");
-            EnterUsername("Password");
+            EnterPassword("Password");
             ClickElement(LocatorType.Id, "signInSubmit");
         }
 
-        public void EnterUsername(string username)
+        private void EnterUsername(string username)
         {
             EnterText(LocatorType.Id, "ap_email", ConfigReader.GetAppSetting(username));
         }
 
-        public void EnterPassword(string password)
+        private void EnterPassword(string password)
         {
-            EnterText(LocatorType.Id, "ap_email", ConfigReader.GetAppSetting(password));
-        }
-
-        public void ClickSignIn()
-        {
-            ClickElement(LocatorType.Id, "dummy");
+            EnterText(LocatorType.Id, "ap_password", ConfigReader.GetAppSetting(password));
         }
     }
 }
