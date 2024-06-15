@@ -8,7 +8,7 @@ using SeleniumFramework.Core.Enums;
 namespace SeleniumFramework.Tests.TestClasses
 {
     [TestFixture, Order(1)]
-    public class HomePageTests
+    public class Tests
     {
         private IWebDriver _driver;
         private HomePage _homePage;
@@ -36,7 +36,7 @@ namespace SeleniumFramework.Tests.TestClasses
         }
 
         [OneTimeTearDown]
-        public void Teardown()
+        public void OneTimeTearDown()
         {
             _driver.Quit();
             _driver.Dispose();
