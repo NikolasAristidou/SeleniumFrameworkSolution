@@ -21,8 +21,9 @@ namespace SeleniumFramework.Core.Base
             Driver.FindElement(locator).Click();
         }
 
-        public void EnterText(By locator, string text)
+        public void EnterText(LocatorType locatorType, string elementValue , string text)
         {
+            By locator = GetByLocator(locatorType, elementValue);
             Driver.FindElement(locator).SendKeys(text);
         }
 
