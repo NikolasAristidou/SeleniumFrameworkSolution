@@ -26,11 +26,6 @@ namespace SeleniumFramework.Core.Base
             By locator = GetByLocator(locatorType, elementValue);
             Driver.FindElement(locator).SendKeys(text);
         }
-
-        public void ClearText(By locator)
-        {
-            Driver.FindElement(locator).Clear();
-        }
         public void HoverToElement(LocatorType locatorType, string elementValue)
         {
             By locator = GetByLocator(locatorType, elementValue);

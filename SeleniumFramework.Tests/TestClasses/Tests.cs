@@ -21,6 +21,12 @@ namespace SeleniumFramework.Tests.TestClasses
             _homePage = new HomePage(_driver);
             _homePage.GoToUrl();
             _loginPage = new LoginPage(_driver);
+            bool isMainPageLoaded = _homePage.ValidateElementVisibility(LocatorType.Id, "nav-logo-sprites");
+            if(!isMainPageLoaded)
+            {
+                IWebElement tryDifferentImageLink = _driver.FindElement(By.XPath("//a[contains(text(), 'Try different image')]"));
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", tryDifferentImageLink);
+            }
             _itemListPage = new ItemListPage(_driver);
         }
 
@@ -29,7 +35,7 @@ namespace SeleniumFramework.Tests.TestClasses
         {
             bool isLogoDisplayed = _homePage.ValidateElementVisibility(LocatorType.Id, "nav-logo-sprites");
             Assert.That(isLogoDisplayed);
-            Logger.Log("Home Page loaded");
+            Logger.Log("UI tests started");
         }
 
         [Test, Description("Verifies Navigation bar is displayed"), Order(2)]
@@ -50,12 +56,13 @@ namespace SeleniumFramework.Tests.TestClasses
         }
 
         [Test, Description("Verify item price card matches with cart"), Order(4)]
-        public void VerifyCreditCardPrice()
+        public void VerifyCartPrice()
         {
             _homePage.ChooseMainMenuCategory();
             _homePage.RetrieveMenuItem();
             bool arePricesMatched = _itemListPage.CreditCardFlowCheck();
             Assert.That(arePricesMatched);
+            Logger.Log("UI tests finished");
         }
 
         [OneTimeTearDown]
