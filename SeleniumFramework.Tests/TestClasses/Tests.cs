@@ -12,6 +12,7 @@ namespace SeleniumFramework.Tests.TestClasses
         private IWebDriver _driver;
         private HomePage _homePage;
         private LoginPage _loginPage;
+        private ItemListPage _itemListPage;
 
         [OneTimeSetUp]
         public void OneTimeSetup()
@@ -20,6 +21,7 @@ namespace SeleniumFramework.Tests.TestClasses
             _homePage = new HomePage(_driver);
             _homePage.GoToUrl();
             _loginPage = new LoginPage(_driver);
+            _itemListPage = new ItemListPage(_driver);
         }
 
         [Test, Description("Verifies amazon home page loaded by validating persisting logo on the left side"), Order(1)]
@@ -48,13 +50,12 @@ namespace SeleniumFramework.Tests.TestClasses
         }
 
         [Test, Description("Verify item price card matches with cart"), Order(4)]
-        public void TestMenuValues()
+        public void VerifyCreditCardPrice()
         {
             _homePage.ChooseMainMenuCategory();
             _homePage.RetrieveMenuItem();
-            bool arePricesMatched = _homePage.CreditCardFlowCheck();
+            bool arePricesMatched = _itemListPage.CreditCardFlowCheck();
             Assert.That(arePricesMatched);
-            //_homePage.GetMenuMapping();
         }
 
         [OneTimeTearDown]
