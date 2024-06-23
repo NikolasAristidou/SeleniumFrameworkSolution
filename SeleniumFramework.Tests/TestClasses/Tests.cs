@@ -22,7 +22,7 @@ namespace SeleniumFramework.Tests.TestClasses
             _homePage.GoToUrl();
             _loginPage = new LoginPage(_driver);
             bool isMainPageLoaded = _homePage.ValidateElementVisibility(LocatorType.Id, "nav-logo-sprites");
-            if(!isMainPageLoaded)
+            if(!isMainPageLoaded) // Captcha workaround
             {
                 IWebElement tryDifferentImageLink = _driver.FindElement(By.XPath("//a[contains(text(), 'Try different image')]"));
                 ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", tryDifferentImageLink);
@@ -55,11 +55,22 @@ namespace SeleniumFramework.Tests.TestClasses
             Assert.That(nonLoggedInValue, Is.Not.EqualTo(username));
         }
 
-        [Test, Description("Verify item price card matches with cart"), Order(4)]
-        public void VerifyCartPrice()
+        [Test, Description("Verify item price card matches with cart - See similar items test case"), Order(4)]
+        public void VerifyCartPriceSimilarItemsScenario()
         {
             _homePage.ChooseMainMenuCategory();
-            _homePage.RetrieveMenuItem();
+            _homePage.RetrieveMenuItem(2);
+            bool arePricesMatched = _itemListPage.CreditCardFlowCheck();
+            Assert.That(arePricesMatched);
+            _itemListPage.DeleteCardItem("/html/body/div[1]/div[1]/div[4]/div[4]/div/div[2]/div[1]/div/form/div[2]/div[3]/div[4]/div/div[3]/div[1]/span[2]/span/input");
+        }
+
+        [Test, Description("Verify item price card matches with cart"), Order(5)]
+        public void VerifyCartPriceScenario()
+        {
+            _homePage.GoToUrl();
+            _homePage.ChooseMainMenuCategory();
+            _homePage.RetrieveMenuItem(1);
             bool arePricesMatched = _itemListPage.CreditCardFlowCheck();
             Assert.That(arePricesMatched);
             Logger.Log("UI tests finished");

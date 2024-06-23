@@ -145,5 +145,11 @@ namespace SeleniumFramework.Core.Pages
             int randomIndex = random.Next(elementsPricesList.Count);
             return elementsPricesList[randomIndex];
         }
+
+        public void DeleteCardItem(string id) 
+        {
+            ClickElement(LocatorType.XPath, id);
+        }
+
     }
 }

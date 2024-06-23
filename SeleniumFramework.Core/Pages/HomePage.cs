@@ -27,9 +27,11 @@ namespace SeleniumFramework.Core.Pages
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             IWebElement electronicsLink = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[contains(., 'Electronics')]")));
 
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+
             ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", electronicsLink);
 
-            Thread.Sleep(TimeSpan.FromSeconds(2));
+            Thread.Sleep(TimeSpan.FromSeconds(1));
 
             By computersAccessoriesLinkLocator = By.XPath("//a[contains(@class, 'hmenu-item') and contains(text(), 'Computers & Accessories')]");
             IWebElement computersAccessoriesLink = wait.Until(ExpectedConditions.ElementToBeClickable(computersAccessoriesLinkLocator));
@@ -41,10 +43,21 @@ namespace SeleniumFramework.Core.Pages
             ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].click();", computersAccessoriesLink);
         }
 
-        public void RetrieveMenuItem()
+        public void RetrieveMenuItem(int scenario)
         {
-            ClickElement(LocatorType.XPath, "/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[4]/div/div/div/div/span/div/div/div[2]/div[1]/h2/a"); //Third Item
-            //ClickElement(LocatorType.XPath, "/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[5]/div/div/span/div/div/div[2]/div[1]/h2/a"); //Forth Item
+            switch (scenario)
+            {
+                case 1:
+                    ClickElement(LocatorType.XPath, "/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[4]/div/div/div/div/span/div/div/div[2]/div[1]/h2/a"); // Third Item
+                    break;
+
+                case 2:
+                    ClickElement(LocatorType.XPath, "/html/body/div[1]/div[1]/div[1]/div[1]/div/span[1]/div[1]/div[5]/div/div/span/div/div/div[2]/div[1]/h2/a"); // Fourth Item
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid scenario value");
+            }
         }
     }
 }
