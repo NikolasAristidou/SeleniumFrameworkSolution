@@ -15,20 +15,9 @@ namespace SeleniumFramework.Core.Pages
 
         public bool CreditCardFlowCheck()
         {
-            var addToCartButtonExist = ValidateElementVisibility(LocatorType.Id, "add-to-cart-button");
+            bool addToCartButtonExist = ValidateElementVisibility(LocatorType.Id, "add-to-cart-button");
 
-            var arePricesMatched = false;
-
-            if (addToCartButtonExist)
-            {
-                arePricesMatched = AddToCartFlowTestCase();
-            }
-            else
-            {
-                arePricesMatched = SeeSimilarItemsTestCase();
-            }
-
-            return arePricesMatched;
+            return addToCartButtonExist ? AddToCartFlowTestCase() : SeeSimilarItemsTestCase();
         }
 
         private bool SeeSimilarItemsTestCase()
@@ -156,5 +145,11 @@ namespace SeleniumFramework.Core.Pages
             int randomIndex = random.Next(elementsPricesList.Count);
             return elementsPricesList[randomIndex];
         }
+
+        public void DeleteCardItem(string id) 
+        {
+            ClickElement(LocatorType.XPath, id);
+        }
+
     }
 }
