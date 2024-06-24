@@ -1,6 +1,6 @@
 # Project Title
 
-QA Exercise for Marloow Navigation - Demonstration videos attached on the email.
+QA Exercise for Marloow Navigation - Demonstration videos attached on the email and repo.
 
 ## Table of Contents
 
