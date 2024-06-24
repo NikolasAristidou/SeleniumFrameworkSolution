@@ -66,6 +66,8 @@ cd SeleniumFrameworkSolution Repository
 }
 ```
 
+- On ConfigReader.cs (SeleniumFrameWork.Core.Utilities) change the coreProjectDirectory path to match the project Directory eg. for me i changed the value to @"C:\Users\nikol\source\repos\SeleniumFrameworkSolution". (I Couldn't get this fixed in time so this is the workaround)
+
 ## Tests
 
 # Important
