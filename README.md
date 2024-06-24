@@ -24,8 +24,9 @@ Ensure you have the following installed:
 #### Features
 
 - Selenium Framework using POM design pattern
-- Covers testing flow provided by Marloow Navigation
-- On see similar items flow "Similar items" are picked randomly and validated based on the product (as per request)
+- Covers basic checks that the site loaded
+- Covers basic authentication and logic checks
+- Covers the two cart validation scenarios (add to cart / see similr items flow)
 
 #### Nuget Packages
 
