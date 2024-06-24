@@ -8,7 +8,7 @@ QA Exercise for Marloow Navigation
 - [Features](#features)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Running Tests](#tests)
+- [Running Tests](#Tests)
 
 ## Requirements
 
@@ -66,7 +66,7 @@ cd SeleniumFrameworkSolution Repository
 }
 ```
 
-## Running Tests
+## Tests
 
 # Important
 
